@@ -5,3 +5,9 @@ Simple test for building a FireX project within Kairex.
 ```sh
 fx build .
 ```
+
+# Deployment
+
+```sh
+kvex deploy --default-configuration .
+```

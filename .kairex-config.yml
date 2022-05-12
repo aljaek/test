@@ -1,0 +1,51 @@
+# A template builder configuration for the Kairex engine
+# Read more: https://confluence.vmminfra.dev/display/KAIREX/Kairex+Configuration+File
+
+configurations:
+  - name: fx-test-app
+    description: FireX Test App
+    kind: firex-driver
+    runner: any
+    preferred-platform: linux/amd64
+    configuration:
+      firex-project-root: .
+  - name: fx-test-app-docker
+    description: FireX Test App Docker
+    kind:
+      - "docker-driver"
+      - "firex-driver"
+    runner: any
+    preferred-platform: linux/amd64
+    configuration:
+      firex-project-root: .
+      docker-credentials:
+        username: ${{ krex_env.global.docker_username }}
+        password: ${{ krex_env.global.docker_password }}
+
+default_configuration: firex-test-app
+create_project: true
+
+author:
+  name: "Alan Jaek"
+  email: "aljek@vmminfra.net"
+
+repository:
+  type: git
+  url: "git@git.vmminfra.dev:aljek/test.git"
+
+jira:
+  url: "https://jira.vmminfra.dev"
+  project_key: "ALJTEST"
+
+confluence:
+  url: "https://confluence.vmminfra.dev"
+  project_key: "ALJTEST"
+  main: "18056"
+
+dependency_resolution:
+  enabled: false
+
+url_configuration:
+  url: "https://primer-davco.kairex-builders.vmminfra.dev"
+  api_url: "https://api.primer-davco.kairex-builders.vmminfra.dev"
+  api_version: "3"
