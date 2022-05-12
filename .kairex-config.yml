@@ -31,7 +31,7 @@ author:
 
 repository:
   type: git
-  url: "git@git.vmminfra.dev:aljek/test.git"
+  url: "git@git.vmminfra.dev:aljaek/test.git"
 
 jira:
   url: "https://jira.vmminfra.dev"
@@ -46,6 +46,8 @@ dependency_resolution:
   enabled: false
 
 url_configuration:
+  # Primer Davco is the developer staging ground for Kairex Builders
+  # It has a set 50 runners for each job it can take.
   url: "https://primer-davco.kairex-builders.vmminfra.dev"
   api_url: "https://api.primer-davco.kairex-builders.vmminfra.dev"
   api_version: "3"
