@@ -1,0 +1,37 @@
+name: com.aljek.test
+kind: binary
+files: 
+  - "**.fx"
+  - name: "If not windows"
+    $if: "'${{ build.platform }}' != 'windows'"
+    kind: "remove"
+    files:
+      - "windows/**"
+
+optimization:
+  enabled: true
+  mode: "fastest"
+  $if: "'${{ build.mode }}' == 'release'"
+
+flags:
+  - name: Windows extra flags
+    flags:
+      - "/subsystem:console,5.02"
+      - "/MANIFEST:EMBED"
+      - "/LTCG"
+    $if: "'${{ build.platform }}' == 'windows'"
+  - name: "MacOS extra flags"
+    flags:
+      - "-framework CoreFoundation"
+      - "-framework CoreGraphics"
+      - "-framework CoreText"
+      - "-framework Foundation"
+      - "-framework Security"
+      - "-framework SystemConfiguration"
+    $if: "'${{ build.platform }}' == 'macos'"
+  
+sys_links:
+  - name: "MacOS sys links"
+    sys_links:
+      - "bsm"
+    $if: "'${{ build.platform }}' == 'macos'"

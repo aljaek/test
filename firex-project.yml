@@ -1,0 +1,60 @@
+# An explaination of the data in this file can be found at the following URL:
+# https://firex.docs.vmminfra.dev/ui/configuration/explaination
+
+version: 1.0.0
+defines:
+  - name: "DEBUG"
+    $if: "'${{ build.mode }}' == 'debug'"
+  
+  # Windows-specific defines
+  - name: "Windows Set"
+    defines:
+      - "_CRT_SECURE_NO_WARNINGS"
+      - "_UNICODE"
+      - "UNICODE"
+      - "NOMINMAX"
+      - "NOGDI"
+      - "WIN32_LEAN_AND_MEAN"
+      - name: "_WIN32_WINNT"
+        value: "0x0A00"
+    $if: "'${{ build.platform }}' == 'windows'"
+
+flags:
+  - name: "Linux and MacOS Set"
+    flags:
+      - "-Wno-implicit-fallthrough"
+      - "-Wno-missing-field-initializers"
+      - "-Wno-strict-aliasing"
+      - "-Wno-switch"
+      - "-Wno-unused-lambda-capture"
+      - "-Wno-unused-private-field"
+      - "-Wno-unused-value"
+      - "-Wno-unused-variable"
+    $if: "'${{ build.platform }}' == 'linux' || '${{ build.platform }}' == 'macos'"
+  - name: "Windows Set"
+    flags:
+      - "/we4668"
+    $if: "'${{ build.platform }}' == 'windows'"
+  - name: "Default Set"
+    flags:
+      - "-Wundef"
+
+build:
+  modes:
+    - "debug"
+    - "release"
+  platforms:
+    - "linux/amd64"
+    - "macos/amd64"
+    - "windows/amd64"
+  languages:
+    - "firex-122"
+
+symbols:
+  # Only set if debug mode is enabled
+  enabled: true
+  kind: "embedded"
+  $if: "'${{ build.mode }}' == 'debug'"
+
+include:
+  - "src/**/*.fx"
