@@ -6,7 +6,7 @@ ifndef IMAGE_NAME
 else
 	@echo "Build the image"
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile .
-ifdef CI
+ifdeq "$(KAIREX_RUNNER)" "1"
 
 	@echo "Copy the image we made into a new tag called \"latest\""
 	docker tag $(IMAGE_NAME):$(IMAGE_TAG) $(IMAGE_NAME):latest
